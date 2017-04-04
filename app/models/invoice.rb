@@ -57,7 +57,7 @@ class Invoice < ApplicationRecord
   end
 
   def self.collection
-    ret = []
+    ret = {invoices: []}
     Invoice.includes(:client, :category).all.each do |inv|
       line = {}
       line[:id] = inv.id
@@ -68,7 +68,7 @@ class Invoice < ApplicationRecord
       line[:issued_at] = inv.issued_at.strftime('%FT%T%:z')
       line[:client] = { id: inv.client.id, name: inv.client.name }
       line[:category] = { id: inv.category.id, name: inv.category.name }
-      ret << line
+      ret[:invoices] << line
     end
     ret
   end
