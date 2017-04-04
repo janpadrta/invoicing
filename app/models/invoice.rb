@@ -84,8 +84,8 @@ class Invoice < ApplicationRecord
   def self.month_data(month)
     ret = { date: month.strftime('%Y-%m-%d'), price_with_vat: 0.0, price: 0.0 }
     Invoice.where(issued_at: month.beginning_of_month..month.end_of_month).each do |inv|
-      ret[:price_with_vat] += inv.price_with_vat
-      ret[:price] += inv.price
+      ret[:price_with_vat] += inv.price_with_vat.to_f
+      ret[:price] += inv.price.to_f
     end
     ret
   end
