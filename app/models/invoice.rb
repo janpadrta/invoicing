@@ -62,9 +62,9 @@ class Invoice < ApplicationRecord
       line = {}
       line[:id] = inv.id
       line[:invoice_number] = inv.number
-      line[:price_with_vat] = inv.price_with_vat.to_f
-      line[:price] = inv.price.to_f
-      line[:vat_rate] = inv.vat_rate.to_f
+      line[:price_with_vat] = BigDecimal.new(inv.price_with_vat)
+      line[:price] = BigDecimal.new(inv.price)
+      line[:vat_rate] = BigDecimal.new(inv.vat_rate)
       line[:issued_at] = inv.issued_at.strftime('%FT%T%:z')
       line[:client] = { id: inv.client.id, name: inv.client.name }
       line[:category] = { id: inv.category.id, name: inv.category.name }
@@ -104,8 +104,8 @@ class Invoice < ApplicationRecord
     Category.all.each do |cat|
       line = { date: month.strftime('%Y-%m-%d'), category: { id: cat.id, name: cat.name }, price_with_vat: 0.0, price: 0.0 }
       cat.invoices.where(issued_at: month.beginning_of_month..month.end_of_month).each do |inv|
-        line[:price_with_vat] += inv.price_with_vat
-        line[:price] += inv.price
+        ret[:price_with_vat] += BigDecimal.new(inv.price_with_vat)
+        ret[:price] += BigDecimal.new(inv.price)
       end
       ret << line
     end
