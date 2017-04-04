@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: invoices
+#
+#  id          :integer          not null, primary key
+#  client_id   :integer
+#  category_id :integer
+#  number      :integer
+#  price       :decimal(, )
+#  vat_rate    :decimal(, )
+#  issued_at   :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  number: 1
+  price: 9.99
+  vat_rate: 9.99
+  issued_at: 2017-04-01 22:24:14
+
+two:
+  number: 1
+  price: 9.99
+  vat_rate: 9.99
+  issued_at: 2017-04-01 22:24:14

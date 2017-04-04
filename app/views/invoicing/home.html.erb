@@ -1,0 +1,39 @@
+<h1>CSV Import</h1>
+<%= form_tag invoicing_upload_path, multipart: true do %>
+  <table>
+    <tr>
+      <td>File</td>
+      <td><%= file_field_tag :file %></td>
+    </tr>
+    <tr>
+      <td><%= submit_tag 'Upload' %></td>
+    </tr>
+  </table>
+<% end %>
+
+<hr/>
+<table>
+  <tr>
+    <th colspan="10"><%= link_to 'Clear db', invoicing_clear_path, confirm: 'Are you sure?' %></th>
+  </tr>
+  <tr>
+    <th>Client name</th>
+    <th>Client company number</th>
+    <th>Category name</th>
+    <th>number</th>
+    <th>price</th>
+    <th>vat_rate</th>
+    <th>issued_at</th>
+  </tr>
+  <% @invoices.each { |inv| %>
+    <tr>
+      <td><%= inv.client.name %></td>
+      <td><%= inv.client.company_number %></td>
+      <td><%= inv.category.name %></td>
+      <td><%= inv.number %></td>
+      <td><%= inv.price %></td>
+      <td><%= inv.vat_rate %></td>
+      <td><%= inv.issued_at.strftime('%d.%m.%Y %T') %></td>
+    </tr>
+  <% } %>
+</table>
