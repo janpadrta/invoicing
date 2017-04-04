@@ -62,9 +62,9 @@ class Invoice < ApplicationRecord
       line = {}
       line[:id] = inv.id
       line[:invoice_number] = inv.number
-      line[:price_with_vat] = inv.price_with_vat
-      line[:price] = inv.price
-      line[:vat_rate] = inv.vat_rate
+      line[:price_with_vat] = inv.price_with_vat.to_f
+      line[:price] = inv.price.to_f
+      line[:vat_rate] = inv.vat_rate.to_f
       line[:issued_at] = inv.issued_at.strftime('%FT%T%:z')
       line[:client] = { id: inv.client.id, name: inv.client.name }
       line[:category] = { id: inv.category.id, name: inv.category.name }
