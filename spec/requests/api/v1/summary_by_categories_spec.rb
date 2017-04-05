@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require 'spec_helper'
 
 describe 'API collection', type: :request do
   it 'should send collection of invoices' do
@@ -24,18 +24,18 @@ describe 'API collection', type: :request do
 
     expect(response).to be_success
     json['summary'].should == [
-      { 'date' => '2017-01-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => '2216.0', 'price' => '2100.0' },
-      { 'date' => '2017-01-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => '1166.0', 'price' => '1100.0' },
-      { 'date' => '2017-01-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => '1166.0', 'price' => '1100.0' },
+      { 'date' => '2017-01-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => 2216.0, 'price' => 2100.0 },
+      { 'date' => '2017-01-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => 1166.0, 'price' => 1100.0 },
+      { 'date' => '2017-01-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => 1166.0, 'price' => 1100.0 },
       { 'date' => '2017-02-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => 0.0, 'price' => 0.0 },
-      { 'date' => '2017-02-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => '2160.0', 'price' => '2000.0' },
-      { 'date' => '2017-02-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => '2160.0', 'price' => '2000.0' },
+      { 'date' => '2017-02-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => 2160.0, 'price' => 2000.0 },
+      { 'date' => '2017-02-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => 2160.0, 'price' => 2000.0 },
       { 'date' => '2017-03-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => 0.0, 'price' => 0.0 },
       { 'date' => '2017-03-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => 0.0, 'price' => 0.0 },
       { 'date' => '2017-03-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => 0.0, 'price' => 0.0 },
-      { 'date' => '2017-04-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => '4367.0', 'price' => '4100.0' },
-      { 'date' => '2017-04-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => '2120.0', 'price' => '2000.0' },
-      { 'date' => '2017-04-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => '2247.0', 'price' => '2100.0' }
+      { 'date' => '2017-04-01', 'category' => { 'id' => 1, 'name' => 'Category First' }, 'price_with_vat' => 4367.0, 'price' => 4100.0 },
+      { 'date' => '2017-04-01', 'category' => { 'id' => 2, 'name' => 'Category Second' }, 'price_with_vat' => 2120.0, 'price' => 2000.0 },
+      { 'date' => '2017-04-01', 'category' => { 'id' => 3, 'name' => 'Category Third' }, 'price_with_vat' => 2247.0, 'price' => 2100.0 }
     ]
   end
 end

@@ -21,10 +21,10 @@ describe 'API collection', type: :request do
 
     expect(response).to be_success
     json['summary'].should == [
-      { 'date' => '2017-01-01', 'price_with_vat' => '4548.0', 'price' => '4300.0' },
-      { 'date' => '2017-02-01', 'price_with_vat' => '4320.0', 'price' => '4000.0' },
+      { 'date' => '2017-01-01', 'price_with_vat' => 4548.0, 'price' => 4300.0 },
+      { 'date' => '2017-02-01', 'price_with_vat' => 4320.0, 'price' => 4000.0 },
       { 'date' => '2017-03-01', 'price_with_vat' => 0.0, 'price' => 0.0 },
-      { 'date' => '2017-04-01', 'price_with_vat' => '8734.0', 'price' => '8200.0' }
+      { 'date' => '2017-04-01', 'price_with_vat' => 8734.0, 'price' => 8200.0 }
     ]
   end
 end

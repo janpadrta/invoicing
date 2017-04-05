@@ -11,6 +11,6 @@ describe 'API collection', type: :request do
     json = JSON.parse(response.body)
 
     expect(response).to be_success
-    expect(json.length).to eq(10)
+    expect(json['invoices'].length).to eq(10)
   end
 end

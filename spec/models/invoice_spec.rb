@@ -62,10 +62,10 @@ describe 'My behaviour' do
     cat = FactoryGirl.create(:category, name: 'Category First')
     FactoryGirl.create(:invoice, client_id: cli1.id, category_id: cat.id, number: 321, price: 1000.0, vat_rate: 5.0, issued_at: '2017-04-03 13:00:00'.to_datetime)
     FactoryGirl.create(:invoice, client_id: cli2.id, category_id: cat.id, number: 654, price: 2000.0, vat_rate: 6.0, issued_at: '2017-04-03 14:00:00'.to_datetime)
-    Invoice.collection.should == [
+    Invoice.collection.should == {invoices: [
       { id: 1, invoice_number: 321, price_with_vat: 1050.0, price: 1000.0, vat_rate: 5.0, issued_at: '2017-04-03T13:00:00+00:00', client: { id: 1, name: 'Client First' }, category: { id: 1, name: 'Category First' } },
       { id: 2, invoice_number: 654, price_with_vat: 2120.0, price: 2000.0, vat_rate: 6.0, issued_at: '2017-04-03T14:00:00+00:00', client: { id: 2, name: 'Client Second' }, category: { id: 1, name: 'Category First' } }
-    ]
+    ]}
   end
 
   it 'should correctly build months range' do
