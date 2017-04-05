@@ -4,9 +4,9 @@ require 'spec_helper'
 
 describe 'API collection', type: :request do
   it 'should send collection of invoices' do
-    cat1 = FactoryGirl.create(:category, name: 'Category First')
-    cat2 = FactoryGirl.create(:category, name: 'Category Second')
-    cat3 = FactoryGirl.create(:category, name: 'Category Third')
+    cat1 = FactoryGirl.create(:category, id:1, name: 'Category First')
+    cat2 = FactoryGirl.create(:category, id:2, name: 'Category Second')
+    cat3 = FactoryGirl.create(:category, id: 3, name: 'Category Third')
     FactoryGirl.create(:invoice, category_id: cat1.id, price: 1000.0, vat_rate: 5.0, issued_at: '2017-01-03 13:00:00'.to_datetime)
     FactoryGirl.create(:invoice, category_id: cat2.id, price: 1100.0, vat_rate: 6.0, issued_at: '2017-01-13 13:00:00'.to_datetime)
     FactoryGirl.create(:invoice, category_id: cat3.id, price: 1100.0, vat_rate: 6.0, issued_at: '2017-01-13 13:00:00'.to_datetime)

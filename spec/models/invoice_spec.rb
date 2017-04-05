@@ -57,11 +57,11 @@ describe 'My behaviour' do
   end
 
   it 'should correctly return collection for json' do
-    cli1 = FactoryGirl.create(:client, name: 'Client First', company_number: 123)
-    cli2 = FactoryGirl.create(:client, name: 'Client Second', company_number: 456)
-    cat = FactoryGirl.create(:category, name: 'Category First')
-    FactoryGirl.create(:invoice, client_id: cli1.id, category_id: cat.id, number: 321, price: 1000.0, vat_rate: 5.0, issued_at: '2017-04-03 13:00:00'.to_datetime)
-    FactoryGirl.create(:invoice, client_id: cli2.id, category_id: cat.id, number: 654, price: 2000.0, vat_rate: 6.0, issued_at: '2017-04-03 14:00:00'.to_datetime)
+    cli1 = FactoryGirl.create(:client, id: 1, name: 'Client First', company_number: 123)
+    cli2 = FactoryGirl.create(:client, id: 2, name: 'Client Second', company_number: 456)
+    cat = FactoryGirl.create(:category, id: 1, name: 'Category First')
+    FactoryGirl.create(:invoice, id: 1, client_id: cli1.id, category_id: cat.id, number: 321, price: 1000.0, vat_rate: 5.0, issued_at: '2017-04-03 13:00:00'.to_datetime)
+    FactoryGirl.create(:invoice, id: 2, client_id: cli2.id, category_id: cat.id, number: 654, price: 2000.0, vat_rate: 6.0, issued_at: '2017-04-03 14:00:00'.to_datetime)
     Invoice.collection.should == {invoices: [
       { id: 1, invoice_number: 321, price_with_vat: 1050.0, price: 1000.0, vat_rate: 5.0, issued_at: '2017-04-03T13:00:00+00:00', client: { id: 1, name: 'Client First' }, category: { id: 1, name: 'Category First' } },
       { id: 2, invoice_number: 654, price_with_vat: 2120.0, price: 2000.0, vat_rate: 6.0, issued_at: '2017-04-03T14:00:00+00:00', client: { id: 2, name: 'Client Second' }, category: { id: 1, name: 'Category First' } }
@@ -90,9 +90,9 @@ describe 'My behaviour' do
   end
 
   it 'should correctly return summary by categories for json' do
-    cat1 = FactoryGirl.create(:category, name: 'Category First')
-    cat2 = FactoryGirl.create(:category, name: 'Category Second')
-    cat3 = FactoryGirl.create(:category, name: 'Category Third')
+    cat1 = FactoryGirl.create(:category, id: 1, name: 'Category First')
+    cat2 = FactoryGirl.create(:category, id: 2, name: 'Category Second')
+    cat3 = FactoryGirl.create(:category, id: 3, name: 'Category Third')
     FactoryGirl.create(:invoice, category_id: cat1.id, price: 1000.0, vat_rate: 5.0, issued_at: '2017-01-03 13:00:00'.to_datetime)
     FactoryGirl.create(:invoice, category_id: cat2.id, price: 1100.0, vat_rate: 6.0, issued_at: '2017-01-13 13:00:00'.to_datetime)
     FactoryGirl.create(:invoice, category_id: cat3.id, price: 1100.0, vat_rate: 6.0, issued_at: '2017-01-13 13:00:00'.to_datetime)
