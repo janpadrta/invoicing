@@ -15,9 +15,19 @@
 #  updated_at  :datetime         not null
 #
 
-require 'spec_helper'
+require 'rails_helper'
 
-describe 'My behaviour' do
+describe Invoice do
+  let(:invoice) { create(:invoice) }
+
+  it { is_expected.to validate_presence_of(:number) }
+  it { is_expected.to validate_presence_of(:price) }
+  it { is_expected.to validate_presence_of(:vat_rate) }
+  it { is_expected.to validate_presence_of(:issued_at) }
+  it { is_expected.to validate_numericality_of(:number) }
+  it { is_expected.to validate_numericality_of(:price) }
+  it { is_expected.to validate_numericality_of(:vat_rate) }
+
   it 'should create invoice (and client and category)' do
     input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
     ret = Invoice.import(input)
