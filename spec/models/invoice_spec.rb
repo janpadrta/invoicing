@@ -28,37 +28,40 @@ describe Invoice do
   it { is_expected.to validate_numericality_of(:price) }
   it { is_expected.to validate_numericality_of(:vat_rate) }
 
-  it 'should create invoice (and client and category)' do
-    input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
-    ret = Invoice.import(input)
-    ret.should be_truthy
-    Client.first.name.should == 'Braden Bernier'
-    Client.first.company_number.should == 5_466_002_685
-    Category.first.name.should == 'rent'
-    inv = Invoice.first
-    inv.number.should == 20_160_003
-    inv.price.should == 33_366.21
-    inv.vat_rate.should == 15
-    inv.issued_at.should == '2016-05-22 16:47:31'.to_datetime
-  end
+  it { is_expected.to belong_to(:client) }
+  it { is_expected.to belong_to(:category) }
 
-  it 'should says wrong client' do
-    input = { 'client name' => '', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
-    ret = Invoice.import(input)
-    ret.should == 'Wrong client parameters.'
-  end
+  # it 'should create invoice (and client and category)' do
+  #   input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
+  #   ret = Invoice.import(input)
+  #   ret.should be_truthy
+  #   Client.first.name.should == 'Braden Bernier'
+  #   Client.first.company_number.should == 5_466_002_685
+  #   Category.first.name.should == 'rent'
+  #   inv = Invoice.first
+  #   inv.number.should == 20_160_003
+  #   inv.price.should == 33_366.21
+  #   inv.vat_rate.should == 15
+  #   inv.issued_at.should == '2016-05-22 16:47:31'.to_datetime
+  # end
 
-  it 'should says wrong category' do
-    input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => '' }
-    ret = Invoice.import(input)
-    ret.should == 'Wrong category parameters.'
-  end
+  # it 'should says wrong client' do
+  #   input = { 'client name' => '', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
+  #   ret = Invoice.import(input)
+  #   ret.should == 'Wrong client parameters.'
+  # end
 
-  it 'should says wrong invoice' do
-    input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
-    ret = Invoice.import(input)
-    ret.should == 'Wrong Invoice parameters.'
-  end
+  # it 'should says wrong category' do
+  #   input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '20160003', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => '' }
+  #   ret = Invoice.import(input)
+  #   ret.should == 'Wrong category parameters.'
+  # end
+
+  # it 'should says wrong invoice' do
+  #   input = { 'client name' => 'Braden Bernier', 'client company number' => '5466002685', 'invoice number' => '', 'invoice price' => '33366.21', 'invoice vat rate' => '15', 'invoice issued at' => '2016-05-22T18:47:31+02:00', 'category name' => 'rent' }
+  #   ret = Invoice.import(input)
+  #   ret.should == 'Wrong Invoice parameters.'
+  # end
 
   it 'should correctly says price with vat' do
     inv = FactoryGirl.create(:invoice, price: 1000.0, vat_rate: 11.0)

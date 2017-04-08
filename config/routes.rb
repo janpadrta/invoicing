@@ -10,9 +10,11 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      get 'invoices', to: 'invoices#collection'
-      get 'summary/months', to: 'invoices#summary_by_months'
-      get 'summary/categories', to: 'invoices#summary_by_categories'
+      resources :invoices, only: [:index]
+      namespace :summary do
+        resources :months, only: [:index]
+        resources :categories, only: [:index]
+      end
     end
   end
 

@@ -17,4 +17,6 @@ describe Client do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:company_number) }
   it { is_expected.to validate_numericality_of(:company_number) }
+
+  it { is_expected.to have_many(:invoices) }
 end

@@ -112,4 +112,6 @@ RSpec.configure do |config|
       example.run
     end
   end
+
+  # config.include Requests::JsonHelpers, type: :request
 end

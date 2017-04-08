@@ -8,7 +8,7 @@ class InvoicingController < ApplicationController
   end
 
   def upload
-    ret = Invoice.process(params[:file])
+    ret = ProcessCsvService.new.work(params[:file])
     if ret.is_a?(String)
       flash[:error] = ret
     elsif ret == true

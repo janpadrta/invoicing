@@ -24,29 +24,29 @@ class Invoice < ApplicationRecord
   validates_presence_of :number, :price, :vat_rate, :issued_at
   validates_numericality_of :number, :price, :vat_rate
 
-  def self.process(file)
-    CSV.foreach(file.path, headers: true) do |row|
-      Invoice.import(row.to_hash)
-    end
-  end
-
-  def self.import(par)
-    cli = Client.find_or_create_by(name: par['client name'], company_number: par['client company number'])
-    return 'Wrong client parameters.' unless cli.id.present?
-    cat = Category.find_or_create_by(name: par['category name'])
-    return 'Wrong category parameters.' unless cat.id.present?
-
-    inv = Invoice.create(
-      client_id: cli.id,
-      category_id: cat.id,
-      number: par['invoice number'],
-      price: par['invoice price'],
-      vat_rate: par['invoice vat rate'],
-      issued_at: par['invoice issued at'].to_datetime
-    )
-    return 'Wrong Invoice parameters.' unless inv.id.present?
-    true
-  end
+  # def self.process(file)
+  #   CSV.foreach(file.path, headers: true) do |row|
+  #     ImportInvoiceService.new.call(row.to_hash)
+  #   end
+  # end
+  #
+  # def self.import(par)
+  #   cli = Client.find_or_create_by(name: par['client name'], company_number: par['client company number'])
+  #   return 'Wrong client parameters.' unless cli.id.present?
+  #   cat = Category.find_or_create_by(name: par['category name'])
+  #   return 'Wrong category parameters.' unless cat.id.present?
+  #
+  #   inv = Invoice.create(
+  #     client_id: cli.id,
+  #     category_id: cat.id,
+  #     number: par['invoice number'],
+  #     price: par['invoice price'],
+  #     vat_rate: par['invoice vat rate'],
+  #     issued_at: par['invoice issued at'].to_datetime
+  #   )
+  #   return 'Wrong Invoice parameters.' unless inv.id.present?
+  #   true
+  # end
 
   def price_with_vat
     (price * multiplier_vat_rate).round(2)
