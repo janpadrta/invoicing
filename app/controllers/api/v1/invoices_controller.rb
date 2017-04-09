@@ -2,6 +2,6 @@
 
 class Api::V1::InvoicesController < BaseApiController
   def index
-    render json: Invoice.collection, status: 200
+    render json: { invoices: DataLoader.collection_of_invoices }, status: 200
   end
 end

@@ -24,30 +24,6 @@ class Invoice < ApplicationRecord
   validates_presence_of :number, :price, :vat_rate, :issued_at
   validates_numericality_of :number, :price, :vat_rate
 
-  # def self.process(file)
-  #   CSV.foreach(file.path, headers: true) do |row|
-  #     ImportInvoiceService.new.call(row.to_hash)
-  #   end
-  # end
-  #
-  # def self.import(par)
-  #   cli = Client.find_or_create_by(name: par['client name'], company_number: par['client company number'])
-  #   return 'Wrong client parameters.' unless cli.id.present?
-  #   cat = Category.find_or_create_by(name: par['category name'])
-  #   return 'Wrong category parameters.' unless cat.id.present?
-  #
-  #   inv = Invoice.create(
-  #     client_id: cli.id,
-  #     category_id: cat.id,
-  #     number: par['invoice number'],
-  #     price: par['invoice price'],
-  #     vat_rate: par['invoice vat rate'],
-  #     issued_at: par['invoice issued at'].to_datetime
-  #   )
-  #   return 'Wrong Invoice parameters.' unless inv.id.present?
-  #   true
-  # end
-
   def price_with_vat
     (price * multiplier_vat_rate).round(2)
   end
@@ -56,68 +32,14 @@ class Invoice < ApplicationRecord
     1 + vat_rate / 100.0
   end
 
-  def self.collection
-    ret = {invoices: []}
-    Invoice.includes(:client, :category).all.each do |inv|
-      line = {}
-      line[:id] = inv.id
-      line[:invoice_number] = inv.number
-      line[:price_with_vat] = inv.price_with_vat.to_f
-      line[:price] = inv.price.to_f
-      line[:vat_rate] = inv.vat_rate.to_f
-      line[:issued_at] = inv.issued_at.strftime('%FT%T%:z')
-      line[:client] = { id: inv.client.id, name: inv.client.name }
-      line[:category] = { id: inv.category.id, name: inv.category.name }
-      ret[:invoices] << line
-    end
-    ret
-  end
-
-  def self.months_range
-    date_from  = Invoice.minimum(:issued_at).to_date
-    date_to    = Invoice.maximum(:issued_at).to_date
-    date_range = date_from..date_to
-
-    date_range.map { |d| Date.new(d.year, d.month, 1) }.uniq
-  end
-
-  def self.month_data(month)
-    ret = { date: month.strftime('%Y-%m-%d'), price_with_vat: 0.0, price: 0.0 }
-    Invoice.where(issued_at: month.beginning_of_month..month.end_of_month).each do |inv|
-      ret[:price_with_vat] += inv.price_with_vat.to_f
-      ret[:price] += inv.price.to_f
-    end
-    ret
-  end
-
-  def self.summary_by_months
-    ret = []
-    dates = Invoice.months_range
-    dates.each do |dat|
-      ret << Invoice.month_data(dat)
-    end
-    { summary: ret }
-  end
-
-  def self.month_data_categories(month)
-    ret = []
-    Category.all.each do |cat|
-      line = { date: month.strftime('%Y-%m-%d'), category: { id: cat.id, name: cat.name }, price_with_vat: 0.0, price: 0.0 }
-      cat.invoices.where(issued_at: month.beginning_of_month..month.end_of_month).each do |inv|
-        line[:price_with_vat] += inv.price_with_vat.to_f
-        line[:price] += inv.price.to_f
-      end
-      ret << line
-    end
-    ret
-  end
-
-  def self.summary_by_categories
-    ret = { summary: [] }
-    dates = Invoice.months_range
-    dates.each do |dat|
-      ret[:summary] += Invoice.month_data_categories(dat)
-    end
-    ret
+  def jsonize
+    {
+        id: id,
+        invoice_number: number,
+        price_with_vat: price_with_vat.to_f,
+        price: price.to_f,
+        vat_rate: vat_rate.to_f,
+        issued_at: issued_at.strftime('%FT%T%:z')
+    }
   end
 end

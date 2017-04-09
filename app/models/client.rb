@@ -16,4 +16,8 @@ class Client < ApplicationRecord
 
   validates_presence_of :name, :company_number
   validates_numericality_of :company_number
+
+  def jsonize
+    { id: id, name: name }
+  end
 end

@@ -13,5 +13,14 @@
       <secret-storage>master_key</secret-storage>
       <auth-required>false</auth-required>
     </data-source>
+    <data-source name="PostgreSQL - my_database_development@localhost" uuid="5af52163-8cf0-4560-884a-a09dabb213a8">
+      <database-info product="PostgreSQL" version="9.5.6" jdbc-version="4.0" driver-name="PostgreSQL Native Driver" driver-version="PostgreSQL 9.4 JDBC4 (build 1201)">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>padrta</user-name>
+      <resolve-scope>my_database_development:public,padrta</resolve-scope>
+    </data-source>
   </component>
 </project>

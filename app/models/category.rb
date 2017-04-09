@@ -14,4 +14,8 @@ class Category < ApplicationRecord
   has_many :invoices
 
   validates_presence_of :name
+
+  def jsonize
+    { id: id, name: name }
+  end
 end

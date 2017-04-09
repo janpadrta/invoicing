@@ -26,9 +26,8 @@ describe 'API collection', type: :request do
     expect(response).to be_success
   end
 
-  it 'should have 12 results' do
+  it 'should have 8 results' do
     get '/api/v1/summary/categories'
-
-    expect(jsoned['summary'].length).to eq(12)
+    expect(jsoned['summary'].length).to eq(8)
   end
 end

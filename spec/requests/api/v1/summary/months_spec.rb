@@ -22,9 +22,9 @@ describe 'API by months', type: :request do
     expect(response).to be_success
   end
 
-  it 'should have 4 records' do
+  it 'should have 3 records' do
     get '/api/v1/summary/months'
 
-    expect(jsoned['summary'].length).to eq(4)
+    expect(jsoned['summary'].length).to eq(3)
   end
 end

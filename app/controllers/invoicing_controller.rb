@@ -9,8 +9,8 @@ class InvoicingController < ApplicationController
 
   def upload
     ret = ProcessCsvService.new.work(params[:file])
-    if ret.is_a?(String)
-      flash[:error] = ret
+    if ret.is_a?(Array)
+      flash[:error] = ret[0].map { |arr| arr.full_messages }.join('; ')
     elsif ret == true
       flash[:notice] = 'File processed.'
     end

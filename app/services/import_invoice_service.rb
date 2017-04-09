@@ -1,4 +1,5 @@
 class ImportInvoiceService
+  #TODO tady pořád nevím, jestli to nedělám moc složitě...
   def call(line)
     errors_arr = []
     cli = ImportClientService.new.call(line)
